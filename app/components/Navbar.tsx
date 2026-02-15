@@ -1,5 +1,6 @@
 
 import React from 'react';
+import Link from 'next/link';
 
 const Navbar = () => {
     return (
@@ -14,10 +15,12 @@ const Navbar = () => {
                     </span>
                 </div>
                 <div className="hidden md:flex items-center gap-8 text-sm font-medium text-slate-600 dark:text-slate-300">
-                    <a className="hover:text-primary transition-colors" href="#">How it Works</a>
-                    <a className="hover:text-primary transition-colors" href="#">Our Approach</a>
-                    <a className="hover:text-primary transition-colors" href="#">Resources</a>
-                    <a className="hover:text-primary transition-colors" href="#">Pricing</a>
+                    <Link href="/" className="hover:text-primary transition-colors">Home</Link>
+                    <Link href="/topics" className="hover:text-primary transition-colors">Topics</Link>
+                    <Link href="/how-it-works" className="hover:text-primary transition-colors">How it Works</Link>
+                    <Link href="/our-approach" className="hover:text-primary transition-colors">Our Approach</Link>
+                    <Link href="/resources" className="hover:text-primary transition-colors">Resources</Link>
+                    <Link href="/pricing" className="hover:text-primary transition-colors">Pricing</Link>
                 </div>
                 <div className="flex items-center gap-4">
                     <button className="hidden sm:block px-4 py-2 text-sm font-medium hover:text-primary transition-colors">
