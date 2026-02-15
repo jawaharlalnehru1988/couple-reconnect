@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Reconnect | Relationship Reconciliation Platform</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#7f19e6",
+                        "background-light": "#f7f6f8",
+                        "background-dark": "#191121",
+                        "sage": "#4a5d4e",
+                        "beige": "#dcd3c1",
+                    },
+                    fontFamily: {
+                        "display": ["Inter"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+</head>
+
+<body
+    class="font-display bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 antialiased overflow-x-hidden">
+    <!-- Navigation -->
+    <nav
+        class="fixed w-full z-50 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md border-b border-primary/10">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
+                    <span class="material-icons text-white text-xl">favorite</span>
+                </div>
+                <span
+                    class="text-xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary/60">Reconnect</span>
+            </div>
+            <div class="hidden md:flex items-center gap-8 text-sm font-medium text-slate-600 dark:text-slate-300">
+                <a class="hover:text-primary transition-colors" href="#">How it Works</a>
+                <a class="hover:text-primary transition-colors" href="#">Our Approach</a>
+                <a class="hover:text-primary transition-colors" href="#">Resources</a>
+                <a class="hover:text-primary transition-colors" href="#">Pricing</a>
+            </div>
+            <div class="flex items-center gap-4">
+                <button class="hidden sm:block px-4 py-2 text-sm font-medium hover:text-primary transition-colors">Log
+                    In</button>
+                <button
+                    class="bg-primary hover:bg-primary/90 text-white px-6 py-2.5 rounded-full text-sm font-semibold transition-all shadow-lg shadow-primary/20">
+                    Start Healing
+                </button>
+            </div>
+        </div>
+    </nav>
+    <!-- Hero Section -->
+    <section class="relative pt-32 pb-20 md:pt-48 md:pb-32 overflow-hidden">
+        <div class="absolute inset-0 z-0">
+            <img alt="A couple talking peacefully" class="w-full h-full object-cover opacity-20 grayscale"
+                data-alt="A couple talking peacefully in a soft focus setting"
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuA7bX8Vn6YDEFcYS_-vH2B4-nR_3YJtCDtb1ITKziL0cYLL6VOC93ifm8HvVXwtxbKJDKlwT2Eo64VhZurc89ovsJnz45JOC3W5vsgzT-ZPwF_hiGDAZ8BAqOJoc48v03YzGV0kV0zIhET6aObbu3VWp1xzTv-55WlPbcjdA2w8ypas_hmee3A5uTcxI-xZT_RBnPJiCt-3vgEdVMVN9Adh2rrjKuDn9w5HVa_dLkytLEC6VgaKAfg5H8lIu2Eg1Ix9LnAxvZ_xPEQk" />
+            <div
+                class="absolute inset-0 bg-gradient-to-b from-background-dark/50 via-background-dark to-background-dark">
+            </div>
+        </div>
+        <div class="relative z-10 max-w-7xl mx-auto px-6 text-center">
+            <div
+                class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-bold uppercase tracking-widest mb-6">
+                <span class="relative flex h-2 w-2">
+                    <span
+                        class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+                    <span class="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
+                </span>
+                Restoring Hope
+            </div>
+            <h1 class="text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-6 leading-[1.1]">
+                Healing the Heart of <br />
+                <span class="bg-clip-text text-transparent bg-gradient-to-r from-primary to-purple-400">Your
+                    Relationship</span>
+            </h1>
+            <p class="max-w-2xl mx-auto text-lg md:text-xl text-slate-400 mb-10 leading-relaxed">
+                Guided tools and professional mediation to help you navigate crisis, rediscover your connection, and
+                build a lasting future together.
+            </p>
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                <button
+                    class="w-full sm:w-auto bg-primary text-white px-8 py-4 rounded-xl text-lg font-bold hover:scale-105 transition-transform shadow-xl shadow-primary/30">
+                    Begin Free Consultation
+                </button>
+                <button
+                    class="w-full sm:w-auto bg-white/5 hover:bg-white/10 text-white border border-white/10 px-8 py-4 rounded-xl text-lg font-bold backdrop-blur-sm transition-all">
+                    Watch How it Works
+                </button>
+            </div>
+            <div
+                class="mt-16 flex flex-wrap justify-center items-center gap-8 md:gap-16 opacity-50 grayscale hover:grayscale-0 transition-all duration-500">
+                <div class="flex items-center gap-2">
+                    <span class="material-icons text-2xl">verified_user</span>
+                    <span class="font-semibold">Licensed Therapists</span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <span class="material-icons text-2xl">security</span>
+                    <span class="font-semibold">End-to-End Privacy</span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <span class="material-icons text-2xl">psychology</span>
+                    <span class="font-semibold">Science-Based Tools</span>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Core Features Grid -->
+    <section class="py-24 bg-background-light dark:bg-background-dark relative">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-20">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">Foundation for Reconciliation</h2>
+                <p class="text-slate-400 max-w-xl mx-auto">We provide the structure and psychological safety needed to
+                    address complex emotional challenges.</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Conflict Resolution Card -->
+                <div
+                    class="group p-8 rounded-2xl bg-white dark:bg-primary/5 border border-primary/10 hover:border-primary/40 transition-all duration-300 relative overflow-hidden">
+                    <div
+                        class="absolute -right-8 -top-8 w-32 h-32 bg-primary/10 rounded-full blur-3xl group-hover:bg-primary/20 transition-all">
+                    </div>
+                    <div class="w-14 h-14 bg-primary/20 rounded-xl flex items-center justify-center mb-6 text-primary">
+                        <span class="material-icons text-3xl">extension</span>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4">Conflict Resolution</h3>
+                    <p class="text-slate-400 leading-relaxed mb-6">
+                        Bring the pieces back together. Our guided framework helps you address root issues without the
+                        heat of the moment, focusing on neutral ground.
+                    </p>
+                    <ul class="space-y-3">
+                        <li class="flex items-center gap-2 text-sm text-slate-300">
+                            <span class="material-icons text-primary text-base">check_circle</span>
+                            Neutral mediation scripts
+                        </li>
+                        <li class="flex items-center gap-2 text-sm text-slate-300">
+                            <span class="material-icons text-primary text-base">check_circle</span>
+                            De-escalation protocols
+                        </li>
+                    </ul>
+                </div>
+                <!-- Communication Card -->
+                <div
+                    class="group p-8 rounded-2xl bg-white dark:bg-primary/5 border border-primary/10 hover:border-primary/40 transition-all duration-300">
+                    <div class="w-14 h-14 bg-primary/20 rounded-xl flex items-center justify-center mb-6 text-primary">
+                        <span class="material-icons text-3xl">forum</span>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4">Active Dialogue</h3>
+                    <p class="text-slate-400 leading-relaxed mb-6">
+                        Learn to speak and listen in ways that foster connection rather than defense. Practical tools
+                        for daily communication hurdles.
+                    </p>
+                    <ul class="space-y-3">
+                        <li class="flex items-center gap-2 text-sm text-slate-300">
+                            <span class="material-icons text-primary text-base">check_circle</span>
+                            Guided expression prompts
+                        </li>
+                        <li class="flex items-center gap-2 text-sm text-slate-300">
+                            <span class="material-icons text-primary text-base">check_circle</span>
+                            Real-time feedback loop
+                        </li>
+                    </ul>
+                </div>
+                <!-- Guided Mediation Card -->
+                <div
+                    class="group p-8 rounded-2xl bg-white dark:bg-primary/5 border border-primary/10 hover:border-primary/40 transition-all duration-300">
+                    <div class="w-14 h-14 bg-primary/20 rounded-xl flex items-center justify-center mb-6 text-primary">
+                        <span class="material-icons text-3xl">self_improvement</span>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4">Guided Healing</h3>
+                    <p class="text-slate-400 leading-relaxed mb-6">
+                        Step-by-step journeys designed by leading psychologists to help you navigate trauma, infidelity,
+                        or long-term drift.
+                    </p>
+                    <ul class="space-y-3">
+                        <li class="flex items-center gap-2 text-sm text-slate-300">
+                            <span class="material-icons text-primary text-base">check_circle</span>
+                            Expert-led video sessions
+                        </li>
+                        <li class="flex items-center gap-2 text-sm text-slate-300">
+                            <span class="material-icons text-primary text-base">check_circle</span>
+                            Progress tracking tools
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Content Section: The Process -->
+    <section class="py-24 border-t border-primary/10">
+        <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-16 items-center">
+            <div class="order-2 md:order-1 relative">
+                <div
+                    class="aspect-square rounded-2xl overflow-hidden shadow-2xl shadow-primary/10 border border-white/5">
+                    <img alt="Calm reflective environment" class="w-full h-full object-cover"
+                        data-alt="A peaceful living room with warm soft lighting"
+                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuCxyCCjnpa4hbIEn86ml3YBYJjHHllKg3eXMJpdQyTgZdAg_FEnk40IBgE0xKG0FrGV5Qm415Q5bIcPTQ0Fk3eQku0Do-cjHcrBggspmsm7ck3fGL4P6jbie5sv1-xVUonHXKrE3gDWXHyw-AmYCNIh7rPGluEKEmpChTqtXpMcsI75JvzztT9JCk3KVKajQ3EBcaC7YilNONYNq7hUm7z0c33f6G60vMpX7d9ScdFyOwOtGm4pQhbmvFq2UcxnvpkTwDkOJhLGUWGO" />
+                </div>
+                <!-- Float card -->
+                <div
+                    class="absolute -bottom-6 -right-6 md:right-12 bg-background-dark border border-white/10 p-6 rounded-xl shadow-2xl max-w-xs">
+                    <div class="flex items-center gap-3 mb-3">
+                        <div class="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center text-primary">
+                            <span class="material-icons">volunteer_activism</span>
+                        </div>
+                        <span class="font-bold text-white">Trust Restored</span>
+                    </div>
+                    <p class="text-sm text-slate-400 italic">"We were weeks away from signing papers. Reconnect gave us
+                        the language to find our way back."</p>
+                    <div class="mt-4 flex gap-1">
+                        <span class="material-icons text-xs text-yellow-500">star</span>
+                        <span class="material-icons text-xs text-yellow-500">star</span>
+                        <span class="material-icons text-xs text-yellow-500">star</span>
+                        <span class="material-icons text-xs text-yellow-500">star</span>
+                        <span class="material-icons text-xs text-yellow-500">star</span>
+                    </div>
+                </div>
+            </div>
+            <div class="order-1 md:order-2">
+                <span class="text-primary font-bold tracking-widest text-sm uppercase mb-4 block">Our Method</span>
+                <h2 class="text-4xl font-bold mb-8 leading-tight">A Gentle, Non-Threatening Path to Resolution</h2>
+                <div class="space-y-8">
+                    <div class="flex gap-4">
+                        <div
+                            class="flex-shrink-0 w-12 h-12 rounded-full bg-sage/20 flex items-center justify-center text-sage-400">
+                            <span class="font-bold text-lg">01</span>
+                        </div>
+                        <div>
+                            <h4 class="text-xl font-bold mb-2">Safe Assessment</h4>
+                            <p class="text-slate-400">Both partners complete individual profiles to identify core
+                                triggers and needs in a private, blame-free environment.</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-4">
+                        <div
+                            class="flex-shrink-0 w-12 h-12 rounded-full bg-sage/20 flex items-center justify-center text-sage-400">
+                            <span class="font-bold text-lg">02</span>
+                        </div>
+                        <div>
+                            <h4 class="text-xl font-bold mb-2">Neutral Ground</h4>
+                            <p class="text-slate-400">Our AI-assisted mediation platform suggests communication patterns
+                                that prevent escalation before it starts.</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-4">
+                        <div
+                            class="flex-shrink-0 w-12 h-12 rounded-full bg-sage/20 flex items-center justify-center text-sage-400">
+                            <span class="font-bold text-lg">03</span>
+                        </div>
+                        <div>
+                            <h4 class="text-xl font-bold mb-2">Rebuilding Rituals</h4>
+                            <p class="text-slate-400">Establish small, actionable daily habits that rebuild intimacy and
+                                safety at your own pace.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Testimonial Section -->
+    <section class="py-24 bg-primary/5">
+        <div class="max-w-4xl mx-auto px-6 text-center">
+            <span class="material-icons text-5xl text-primary/30 mb-8">format_quote</span>
+            <p class="text-2xl md:text-3xl font-medium text-white italic leading-snug mb-8">
+                "The biggest hurdle wasn't that we didn't love each other, it was that we didn't know how to stop
+                hurting each other. Reconnect provided the guardrails we desperately needed."
+            </p>
+            <div class="flex items-center justify-center gap-4">
+                <div
+                    class="w-12 h-12 rounded-full bg-primary/30 flex items-center justify-center font-bold text-primary">
+                    SC</div>
+                <div class="text-left">
+                    <div class="font-bold text-white">Sarah &amp; Chris M.</div>
+                    <div class="text-sm text-slate-400">Married 14 years • Reconciled in 2023</div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Call to Action -->
+    <section class="py-24">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="relative bg-primary rounded-3xl overflow-hidden p-8 md:p-16 text-center">
+                <div class="absolute inset-0 opacity-10 pointer-events-none">
+                    <div
+                        class="absolute top-0 left-0 w-64 h-64 bg-white rounded-full -translate-x-1/2 -translate-y-1/2 blur-3xl">
+                    </div>
+                    <div
+                        class="absolute bottom-0 right-0 w-96 h-96 bg-white rounded-full translate-x-1/3 translate-y-1/3 blur-3xl">
+                    </div>
+                </div>
+                <h2 class="text-3xl md:text-5xl font-bold text-white mb-6 relative z-10">Don't wait until it's too late
+                </h2>
+                <p class="text-white/80 text-lg md:text-xl max-w-2xl mx-auto mb-10 relative z-10 leading-relaxed">
+                    Most relationships don't end because of a lack of love, but because of a lack of tools. Take the
+                    first step toward healing today.
+                </p>
+                <div class="flex flex-col sm:flex-row items-center justify-center gap-4 relative z-10">
+                    <button
+                        class="bg-white text-primary px-10 py-4 rounded-xl text-lg font-bold hover:bg-slate-100 transition-colors shadow-xl">
+                        Start Your Free Trial
+                    </button>
+                    <button
+                        class="bg-primary/20 border border-white/20 text-white px-10 py-4 rounded-xl text-lg font-bold hover:bg-primary/30 transition-colors backdrop-blur-sm">
+                        Speak with a Counselor
+                    </button>
+                </div>
+                <p class="mt-8 text-white/60 text-sm">Join over 12,000 couples who saved their marriage this year.</p>
+            </div>
+        </div>
+    </section>
+    <!-- Footer -->
+    <footer class="bg-background-dark border-t border-primary/10 pt-20 pb-10">
+        <div class="max-w-7xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-12 mb-16">
+            <div class="col-span-2 lg:col-span-2">
+                <div class="flex items-center gap-2 mb-6">
+                    <div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
+                        <span class="material-icons text-white text-xl">favorite</span>
+                    </div>
+                    <span class="text-xl font-bold text-white">Reconnect</span>
+                </div>
+                <p class="text-slate-400 max-w-xs mb-8">
+                    The science-backed platform dedicated to ending the divorce crisis through compassionate
+                    communication and mediation.
+                </p>
+                <div class="flex gap-4">
+                    <a class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-slate-400 hover:text-primary transition-colors border border-white/10"
+                        href="#">
+                        <span class="material-icons text-xl">facebook</span>
+                    </a>
+                    <a class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-slate-400 hover:text-primary transition-colors border border-white/10"
+                        href="#">
+                        <span class="material-icons text-xl">alternate_email</span>
+                    </a>
+                    <a class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-slate-400 hover:text-primary transition-colors border border-white/10"
+                        href="#">
+                        <span class="material-icons text-xl">language</span>
+                    </a>
+                </div>
+            </div>
+            <div>
+                <h5 class="text-white font-bold mb-6">Product</h5>
+                <ul class="space-y-4 text-slate-400 text-sm">
+                    <li><a class="hover:text-primary transition-colors" href="#">How it Works</a></li>
+                    <li><a class="hover:text-primary transition-colors" href="#">For Couples</a></li>
+                    <li><a class="hover:text-primary transition-colors" href="#">Mediation Tools</a></li>
+                    <li><a class="hover:text-primary transition-colors" href="#">App Download</a></li>
+                </ul>
+            </div>
+            <div>
+                <h5 class="text-white font-bold mb-6">Company</h5>
+                <ul class="space-y-4 text-slate-400 text-sm">
+                    <li><a class="hover:text-primary transition-colors" href="#">About Us</a></li>
+                    <li><a class="hover:text-primary transition-colors" href="#">Science &amp; Methodology</a></li>
+                    <li><a class="hover:text-primary transition-colors" href="#">Counselor Network</a></li>
+                    <li><a class="hover:text-primary transition-colors" href="#">Success Stories</a></li>
+                </ul>
+            </div>
+            <div>
+                <h5 class="text-white font-bold mb-6">Legal</h5>
+                <ul class="space-y-4 text-slate-400 text-sm">
+                    <li><a class="hover:text-primary transition-colors" href="#">Privacy Policy</a></li>
+                    <li><a class="hover:text-primary transition-colors" href="#">Terms of Service</a></li>
+                    <li><a class="hover:text-primary transition-colors" href="#">HIPAA Compliance</a></li>
+                    <li><a class="hover:text-primary transition-colors" href="#">Cookie Policy</a></li>
+                </ul>
+            </div>
+        </div>
+        <div
+            class="max-w-7xl mx-auto px-6 pt-10 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6">
+            <p class="text-slate-500 text-sm">© 2024 Reconnect Inc. All rights reserved.</p>
+            <div class="flex items-center gap-6">
+                <div class="flex items-center gap-1 text-slate-500 text-sm">
+                    <span class="material-icons text-xs">public</span>
+                    English (US)
+                </div>
+                <div class="flex items-center gap-1 text-slate-500 text-sm">
+                    <span class="material-icons text-xs text-primary">shield</span>
+                    Secure &amp; Encrypted
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+
+</html>
