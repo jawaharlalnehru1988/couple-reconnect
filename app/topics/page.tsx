@@ -41,7 +41,23 @@ interface ApiResponse {
 }
 
 // Subtopic Modal Component
-const SubtopicModal = ({ subtopic, onClose }: { subtopic: Subtopic, onClose: () => void }) => {
+const SubtopicModal = ({
+    subtopic,
+    onClose,
+    isRead,
+    onToggleRead,
+    prevSubtopic,
+    nextSubtopic,
+    onNavigate
+}: {
+    subtopic: Subtopic,
+    onClose: () => void,
+    isRead: boolean,
+    onToggleRead: (id: string) => void,
+    prevSubtopic: Subtopic | null,
+    nextSubtopic: Subtopic | null,
+    onNavigate: (subtopic: Subtopic) => void
+}) => {
     return (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm overflow-y-auto">
             <div className="bg-white dark:bg-background-dark w-full max-w-4xl rounded-2xl shadow-2xl overflow-hidden relative border border-primary/20 max-h-[90vh] flex flex-col">
@@ -114,6 +130,68 @@ const SubtopicModal = ({ subtopic, onClose }: { subtopic: Subtopic, onClose: () 
                             </div>
                         )}
                     </div>
+
+                    {/* Navigation Suggestions */}
+                    {(prevSubtopic || nextSubtopic) && (
+                        <div className="mt-12 pt-8 border-t border-slate-100 dark:border-slate-800">
+                            <h4 className="text-sm font-bold text-slate-400 uppercase tracking-[0.2em] mb-6 text-center">Continue Exploring</h4>
+                            <div className={`grid gap-4 ${prevSubtopic && nextSubtopic ? 'md:grid-cols-2' : 'grid-cols-1 max-w-md mx-auto'}`}>
+                                {prevSubtopic && (
+                                    <button
+                                        onClick={() => onNavigate(prevSubtopic)}
+                                        className="flex items-center gap-4 p-4 rounded-xl border border-slate-200 dark:border-slate-700 hover:border-primary/50 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-all text-left group"
+                                    >
+                                        <div className="p-2 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-400 group-hover:text-primary transition-colors">
+                                            <span className="material-icons">arrow_back</span>
+                                        </div>
+                                        <div>
+                                            <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-1">Previous Guide</span>
+                                            <p className="font-bold text-slate-700 dark:text-slate-300 text-sm line-clamp-1">{prevSubtopic.subtopic}</p>
+                                        </div>
+                                    </button>
+                                )}
+                                {nextSubtopic && (
+                                    <button
+                                        onClick={() => onNavigate(nextSubtopic)}
+                                        className="flex items-center justify-between gap-4 p-4 rounded-xl border border-slate-200 dark:border-slate-700 hover:border-primary/50 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-all text-right group"
+                                    >
+                                        <div className="flex-1 min-w-0">
+                                            <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-1">Next Up</span>
+                                            <p className="font-bold text-slate-700 dark:text-slate-300 text-sm line-clamp-1">{nextSubtopic.subtopic}</p>
+                                        </div>
+                                        <div className="p-2 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-400 group-hover:text-primary transition-colors">
+                                            <span className="material-icons">arrow_forward</span>
+                                        </div>
+                                    </button>
+                                )}
+                            </div>
+                        </div>
+                    )}
+                </div>
+
+                {/* Footer with Mark as Read */}
+                <div className="p-6 border-t border-primary/10 bg-slate-50 dark:bg-slate-900/50 flex flex-col sm:flex-row justify-between items-center gap-4">
+                    <p className="text-sm text-slate-500 dark:text-slate-400 italic">
+                        {isRead ? 'You have completed this guide.' : 'Finished reading? Mark it as complete.'}
+                    </p>
+                    <div className="flex items-center gap-3 w-full sm:w-auto">
+                        <button
+                            onClick={() => onToggleRead(subtopic.subtopic_id)}
+                            className={`flex-1 sm:flex-none flex items-center justify-center gap-2 px-6 py-3 rounded-xl font-bold transition-all duration-300 shadow-lg ${isRead
+                                ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-300 hover:bg-emerald-200'
+                                : 'bg-primary text-white hover:bg-primary/90 hover:scale-[1.02] active:scale-95'
+                                }`}
+                        >
+                            <span className="material-icons">{isRead ? 'check_circle' : 'done'}</span>
+                            {isRead ? 'Completed' : 'Mark as Read'}
+                        </button>
+                        <button
+                            onClick={onClose}
+                            className="flex-1 sm:flex-none px-6 py-3 rounded-xl font-bold bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors"
+                        >
+                            Close
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -125,6 +203,28 @@ export default function TopicsPage() {
     const [loading, setLoading] = useState(true);
     const [selectedTopic, setSelectedTopic] = useState<string | null>(null);
     const [selectedSubtopic, setSelectedSubtopic] = useState<Subtopic | null>(null);
+    const [readSubtopics, setReadSubtopics] = useState<string[]>([]);
+
+    useEffect(() => {
+        const saved = localStorage.getItem('readSubtopics');
+        if (saved) {
+            try {
+                setReadSubtopics(JSON.parse(saved));
+            } catch (e) {
+                console.error("Error parsing read subtopics", e);
+            }
+        }
+    }, []);
+
+    const toggleReadStatus = (id: string) => {
+        setReadSubtopics(prev => {
+            const updated = prev.includes(id)
+                ? prev.filter(item => item !== id)
+                : [...prev, id];
+            localStorage.setItem('readSubtopics', JSON.stringify(updated));
+            return updated;
+        });
+    };
 
     useEffect(() => {
         const fetchTopics = async () => {
@@ -176,8 +276,8 @@ export default function TopicsPage() {
                                 <div
                                     key={topic.topic_id}
                                     className={`bg-white dark:bg-slate-900 rounded-2xl overflow-hidden border transition-all duration-300 ${selectedTopic === topic.topic_id
-                                            ? 'border-primary shadow-xl shadow-primary/10 ring-1 ring-primary'
-                                            : 'border-slate-200 dark:border-slate-800 hover:border-primary/50'
+                                        ? 'border-primary shadow-xl shadow-primary/10 ring-1 ring-primary'
+                                        : 'border-slate-200 dark:border-slate-800 hover:border-primary/50'
                                         }`}
                                 >
                                     {/* Topic Header */}
@@ -213,12 +313,25 @@ export default function TopicsPage() {
                                                         className="bg-white dark:bg-slate-800 p-5 rounded-xl border border-slate-200 dark:border-slate-700 hover:border-primary/50 hover:shadow-lg hover:-translate-y-1 transition-all cursor-pointer group"
                                                     >
                                                         <div className="flex items-start justify-between gap-3 mb-3">
-                                                            <div className="p-2 rounded-lg bg-indigo-50 dark:bg-indigo-900/20 text-indigo-600 dark:text-indigo-400 group-hover:bg-primary group-hover:text-white transition-colors">
-                                                                <span className="material-icons text-xl">psychology</span>
+                                                            <div className={`p-2 rounded-lg transition-colors ${readSubtopics.includes(subtopic.subtopic_id)
+                                                                ? 'bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600 dark:text-emerald-400'
+                                                                : 'bg-indigo-50 dark:bg-indigo-900/20 text-indigo-600 dark:text-indigo-400 group-hover:bg-primary group-hover:text-white'
+                                                                }`}>
+                                                                <span className="material-icons text-xl">
+                                                                    {readSubtopics.includes(subtopic.subtopic_id) ? 'task_alt' : 'psychology'}
+                                                                </span>
                                                             </div>
-                                                            <span className="material-icons text-slate-300 group-hover:text-primary transition-colors">arrow_forward</span>
+                                                            <div className="flex items-center gap-2">
+                                                                {readSubtopics.includes(subtopic.subtopic_id) && (
+                                                                    <span className="text-[10px] font-bold text-emerald-600 dark:text-emerald-400 uppercase tracking-tight bg-emerald-50 dark:bg-emerald-900/20 px-2 py-1 rounded-md">Read</span>
+                                                                )}
+                                                                <span className="material-icons text-slate-300 group-hover:text-primary transition-colors">arrow_forward</span>
+                                                            </div>
                                                         </div>
-                                                        <p className="font-medium text-slate-800 dark:text-slate-200 line-clamp-2">
+                                                        <p className={`font-medium line-clamp-2 transition-colors ${readSubtopics.includes(subtopic.subtopic_id)
+                                                            ? 'text-slate-400 dark:text-slate-500 pr-2'
+                                                            : 'text-slate-800 dark:text-slate-200'
+                                                            }`}>
                                                             {subtopic.subtopic}
                                                         </p>
                                                     </div>
@@ -236,9 +349,29 @@ export default function TopicsPage() {
             <Footer />
 
             {/* Modal for Subtopic Details */}
-            {selectedSubtopic && (
-                <SubtopicModal subtopic={selectedSubtopic} onClose={() => setSelectedSubtopic(null)} />
-            )}
+            {selectedSubtopic && (() => {
+                const allSubtopicsFlat = topics.flatMap(t => t.subtopics);
+                const currentIndex = allSubtopicsFlat.findIndex(s => s.subtopic_id === selectedSubtopic.subtopic_id);
+                const prevSubtopic = currentIndex > 0 ? allSubtopicsFlat[currentIndex - 1] : null;
+                const nextSubtopic = currentIndex < allSubtopicsFlat.length - 1 ? allSubtopicsFlat[currentIndex + 1] : null;
+
+                return (
+                    <SubtopicModal
+                        subtopic={selectedSubtopic}
+                        onClose={() => setSelectedSubtopic(null)}
+                        isRead={readSubtopics.includes(selectedSubtopic.subtopic_id)}
+                        onToggleRead={toggleReadStatus}
+                        prevSubtopic={prevSubtopic}
+                        nextSubtopic={nextSubtopic}
+                        onNavigate={(s) => {
+                            setSelectedSubtopic(s);
+                            // Scroll modal content to top
+                            const modalContent = document.querySelector('.custom-scrollbar');
+                            if (modalContent) modalContent.scrollTo({ top: 0, behavior: 'smooth' });
+                        }}
+                    />
+                );
+            })()}
         </div>
     );
 }
