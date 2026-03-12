@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import ReactMarkdown from 'react-markdown';
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 
@@ -128,18 +129,22 @@ export default function ConflictResolutionPage() {
                                                 <span className="material-icons text-amber-500 scale-110">history_edu</span>
                                                 The Upbringing Context
                                             </h4>
-                                            <p className="text-slate-600 dark:text-slate-400 italic text-lg leading-relaxed">
-                                                "{selectedScenario.upbringing_context}"
-                                            </p>
+                                            <div className="text-slate-600 dark:text-slate-400 italic text-lg leading-relaxed prose prose-slate dark:prose-invert max-w-none">
+                                                <ReactMarkdown>
+                                                    {`"${selectedScenario.upbringing_context}"`}
+                                                </ReactMarkdown>
+                                            </div>
                                         </div>
                                         <div className="bg-rose-50 dark:bg-rose-900/10 p-8 rounded-2xl border border-rose-100 dark:border-rose-900/20">
                                             <h4 className="flex items-center gap-3 font-bold text-rose-700 dark:text-rose-300 mb-4 text-lg">
                                                 <span className="material-icons text-rose-500 scale-110">warning</span>
                                                 How it Manifests
                                             </h4>
-                                            <p className="text-rose-800 dark:text-rose-200 text-lg leading-relaxed">
-                                                {selectedScenario.conflict_manifestation}
-                                            </p>
+                                            <div className="text-rose-800 dark:text-rose-200 text-lg leading-relaxed prose prose-rose dark:prose-invert max-w-none">
+                                                <ReactMarkdown>
+                                                    {selectedScenario.conflict_manifestation}
+                                                </ReactMarkdown>
+                                            </div>
                                         </div>
                                     </div>
 

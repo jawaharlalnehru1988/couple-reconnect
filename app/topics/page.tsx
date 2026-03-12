@@ -2,6 +2,8 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 
@@ -39,6 +41,22 @@ interface ApiResponse {
     previous: string | null;
     results: Topic[];
 }
+
+// Helper to convert plain text with some structure to proper Markdown
+const markdownify = (text: string) => {
+    if (!text) return "";
+    return text
+        .replace(/^Title: (.*)$/gm, '# $1')
+        .replace(/^Root Causes:$/gm, '## Root Causes')
+        .replace(/^Practical Solution: (.*)$/gm, '## Practical Solution: $1')
+        .replace(/^(\d+)\) (.*)$/gm, '$1. $2')
+        // Dialogue formatting: Ensure speakers are on new lines and bolded
+        // Handles cases like "Wife:" or "Husband:" at start of line or mid-sentence
+        .replace(/([A-Z][a-z]+:)/g, '\n\n**$1**')
+        .replace(/^"|"$/g, '') // Remove wrapping quotes if they exist
+        .replace(/\r\n/g, '\n')
+        .trim();
+};
 
 // Subtopic Modal Component
 const SubtopicModal = ({
@@ -79,13 +97,15 @@ const SubtopicModal = ({
                 <div className="p-6 overflow-y-auto custom-scrollbar">
                     {/* Article Section */}
                     {subtopic.solution.article && (
-                        <div className="mb-10 prose dark:prose-invert max-w-none">
-                            <h4 className="flex items-center gap-2 text-xl font-bold text-primary mb-4">
+                        <div className="mb-10 prose prose-slate dark:prose-invert max-w-none prose-headings:text-primary prose-strong:text-slate-900 dark:prose-strong:text-white prose-p:leading-relaxed">
+                            <h4 className="flex items-center gap-2 text-xl font-bold text-primary mb-6 no-underline">
                                 <span className="material-icons">article</span>
                                 Understanding the Issue
                             </h4>
-                            <div className="bg-slate-50 dark:bg-slate-800/50 p-6 rounded-xl border border-slate-200 dark:border-slate-700/50 whitespace-pre-wrap text-slate-700 dark:text-slate-300 leading-relaxed font-sans">
-                                {subtopic.solution.article}
+                            <div className="bg-slate-50 dark:bg-slate-800/50 p-8 rounded-2xl border border-slate-200 dark:border-slate-700/50 text-slate-700 dark:text-slate-300">
+                                <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                                    {markdownify(subtopic.solution.article)}
+                                </ReactMarkdown>
                             </div>
                         </div>
                     )}
@@ -101,9 +121,9 @@ const SubtopicModal = ({
                                 </h4>
                                 <div className="space-y-4">
                                     {subtopic.solution.wrong_conversations.map((conv) => (
-                                        <div key={conv.id} className="bg-rose-50 dark:bg-rose-900/10 p-5 rounded-xl border border-rose-100 dark:border-rose-900/30">
-                                            <div className="whitespace-pre-wrap text-sm text-rose-900 dark:text-rose-100 italic">
-                                                "{conv.sample}"
+                                        <div key={conv.id} className="bg-rose-50 dark:bg-rose-900/10 p-5 rounded-xl border border-rose-100 dark:border-rose-900/30 prose prose-rose dark:prose-invert max-w-none prose-p:m-0">
+                                            <div className="text-sm italic">
+                                                <ReactMarkdown>{markdownify(conv.sample)}</ReactMarkdown>
                                             </div>
                                         </div>
                                     ))}
@@ -120,9 +140,9 @@ const SubtopicModal = ({
                                 </h4>
                                 <div className="space-y-4">
                                     {subtopic.solution.perfect_conversations.map((conv) => (
-                                        <div key={conv.id} className="bg-emerald-50 dark:bg-emerald-900/10 p-5 rounded-xl border border-emerald-100 dark:border-emerald-900/30">
-                                            <div className="whitespace-pre-wrap text-sm text-emerald-900 dark:text-emerald-100">
-                                                "{conv.sample}"
+                                        <div key={conv.id} className="bg-emerald-50 dark:bg-emerald-900/10 p-5 rounded-xl border border-emerald-100 dark:border-emerald-900/30 prose prose-emerald dark:prose-invert max-w-none prose-p:m-0">
+                                            <div className="text-sm">
+                                                <ReactMarkdown>{markdownify(conv.sample)}</ReactMarkdown>
                                             </div>
                                         </div>
                                     ))}

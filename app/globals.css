@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@plugin "@tailwindcss/typography";
 
 :root {
   --background: #ffffff;
@@ -30,14 +31,14 @@ body {
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-  
+
   /* Custom Colors */
   --color-primary: #7f19e6;
   --color-background-light: #f7f6f8;
   --color-background-dark: #191121;
   --color-sage: #4a5d4e;
   --color-beige: #dcd3c1;
-  
+
   /* Fonts */
   --font-display: var(--font-inter);
 }
