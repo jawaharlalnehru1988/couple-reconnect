@@ -249,9 +249,17 @@ export default function TopicsPage() {
     useEffect(() => {
         const fetchTopics = async () => {
             try {
-                const response = await fetch('https://couple.asknehru.com/api/topics/');
-                const data: ApiResponse = await response.json();
-                setTopics(data.results);
+                let allTopics: Topic[] = [];
+                let nextUrl: string | null = 'https://couple.asknehru.com/api/topics/';
+
+                while (nextUrl) {
+                    const response = await fetch(nextUrl);
+                    const data: ApiResponse = await response.json();
+                    allTopics = [...allTopics, ...data.results];
+                    nextUrl = data.next;
+                }
+
+                setTopics(allTopics);
             } catch (error) {
                 console.error("Error fetching topics:", error);
             } finally {
