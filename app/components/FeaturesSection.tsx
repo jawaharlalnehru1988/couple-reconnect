@@ -23,6 +23,7 @@ const features = [
         description: "Step-by-step journeys designed by leading psychologists to help you navigate trauma, infidelity, or long-term drift.",
         points: ["Expert-led video sessions", "Progress tracking tools"],
         hasGlow: false,
+        link: "/recovery-ideas"
     },
 ];
 

@@ -30,14 +30,7 @@ const HeroSection = () => {
                 <p className="max-w-2xl mx-auto text-lg md:text-xl text-slate-400 mb-10 leading-relaxed">
                     Guided tools and professional mediation to help you navigate crisis, rediscover your connection, and build a lasting future together.
                 </p>
-                <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-                    <button className="w-full sm:w-auto bg-primary text-white px-8 py-4 rounded-xl text-lg font-bold hover:scale-105 transition-transform shadow-xl shadow-primary/30 cursor-pointer">
-                        Begin Free Consultation
-                    </button>
-                    <button className="w-full sm:w-auto bg-white/5 hover:bg-white/10 text-white border border-white/10 px-8 py-4 rounded-xl text-lg font-bold backdrop-blur-sm transition-all cursor-pointer">
-                        Watch How it Works
-                    </button>
-                </div>
+
                 <div className="mt-16 flex flex-wrap justify-center items-center gap-8 md:gap-16 opacity-50 grayscale hover:grayscale-0 transition-all duration-500">
                     <div className="flex items-center gap-2">
                         <span className="material-icons text-2xl">verified_user</span>
