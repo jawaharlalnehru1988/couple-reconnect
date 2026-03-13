@@ -24,6 +24,28 @@ export default function RecoveryIdeasPage() {
     const [selectedIdea, setSelectedIdea] = useState<RecoveryIdea | null>(null);
     const [filterGender, setFilterGender] = useState<'all' | 'male' | 'female'>('all');
     const [selectedCategory, setSelectedCategory] = useState<string>('all');
+    const [readSubtopics, setReadSubtopics] = useState<string[]>([]);
+
+    useEffect(() => {
+        const saved = localStorage.getItem('readSubtopics');
+        if (saved) {
+            try {
+                setReadSubtopics(JSON.parse(saved));
+            } catch (e) {
+                console.error("Error parsing read subtopics", e);
+            }
+        }
+    }, []);
+
+    const toggleReadStatus = (id: string) => {
+        setReadSubtopics(prev => {
+            const updated = prev.includes(id)
+                ? prev.filter(item => item !== id)
+                : [...prev, id];
+            localStorage.setItem('readSubtopics', JSON.stringify(updated));
+            return updated;
+        });
+    };
 
     useEffect(() => {
         const fetchIdeas = async () => {
@@ -151,6 +173,11 @@ export default function RecoveryIdeasPage() {
                                             <span className="text-[10px] font-bold uppercase tracking-widest bg-amber-50 text-amber-600 dark:bg-amber-900/20 dark:text-amber-400 px-2 py-1 rounded-md">
                                                 {idea.addictedTo}
                                             </span>
+                                            {readSubtopics.includes(String(idea.id)) && (
+                                                <span className="text-[10px] font-bold text-emerald-600 dark:text-emerald-400 uppercase tracking-tight bg-emerald-50 dark:bg-emerald-900/20 px-2 py-1 rounded-md">
+                                                    Read
+                                                </span>
+                                            )}
                                         </div>
 
                                         <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-4 group-hover:text-primary transition-colors">
@@ -190,41 +217,101 @@ export default function RecoveryIdeasPage() {
             <Footer />
 
             {/* Modal for Article */}
-            {selectedIdea && (
-                <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm overflow-y-auto">
-                    <div className="bg-white dark:bg-background-dark w-full max-w-4xl rounded-3xl shadow-2xl overflow-hidden relative border border-primary/20 max-h-[90vh] flex flex-col">
-                        <button
-                            onClick={() => setSelectedIdea(null)}
-                            className="absolute top-4 right-4 p-2 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-500 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors z-10"
-                        >
-                            <span className="material-icons text-xl">close</span>
-                        </button>
+            {selectedIdea && (() => {
+                const currentIndex = filteredIdeas.findIndex(i => i.id === selectedIdea.id);
+                const prevIdea = currentIndex > 0 ? filteredIdeas[currentIndex - 1] : null;
+                const nextIdea = currentIndex < filteredIdeas.length - 1 ? filteredIdeas[currentIndex + 1] : null;
 
-                        <div className="p-8 md:p-12 overflow-y-auto custom-scrollbar">
-                            <article className="prose prose-slate dark:prose-invert max-w-none prose-headings:text-primary prose-strong:text-slate-900 dark:prose-strong:text-white prose-p:leading-relaxed prose-blockquote:border-primary prose-blockquote:bg-primary/5 prose-blockquote:py-1 prose-blockquote:rounded-r-lg">
-                                <ReactMarkdown remarkPlugins={[remarkGfm]}>
-                                    {ideaToMarkdown(selectedIdea)}
-                                </ReactMarkdown>
-                            </article>
-                            
-                            <div className="mt-12 pt-8 border-t border-slate-100 dark:border-slate-800 flex justify-between items-center">
-                                <div className="flex items-center gap-3">
-                                    <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary">
-                                        <span className="material-icons text-sm">auto_awesome</span>
+                return (
+                    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm overflow-y-auto">
+                        <div className="bg-white dark:bg-background-dark w-full max-w-4xl rounded-3xl shadow-2xl overflow-hidden relative border border-primary/20 max-h-[90vh] flex flex-col">
+                            <button
+                                onClick={() => setSelectedIdea(null)}
+                                className="absolute top-4 right-4 p-2 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-500 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors z-10"
+                            >
+                                <span className="material-icons text-xl">close</span>
+                            </button>
+
+                            <div className="p-8 md:p-12 overflow-y-auto custom-scrollbar">
+                                <article className="prose prose-slate dark:prose-invert max-w-none prose-headings:text-primary prose-strong:text-slate-900 dark:prose-strong:text-white prose-p:leading-relaxed prose-blockquote:border-primary prose-blockquote:bg-primary/5 prose-blockquote:py-1 prose-blockquote:rounded-r-lg">
+                                    <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                                        {ideaToMarkdown(selectedIdea)}
+                                    </ReactMarkdown>
+                                </article>
+
+                                {/* Navigation Suggestions */}
+                                {(prevIdea || nextIdea) && (
+                                    <div className="mt-16 pt-8 border-t border-slate-100 dark:border-slate-800">
+                                        <h4 className="text-sm font-bold text-slate-400 uppercase tracking-[0.2em] mb-6 text-center">Continue Transformation</h4>
+                                        <div className={`grid gap-4 ${prevIdea && nextIdea ? 'md:grid-cols-2' : 'grid-cols-1 max-w-md mx-auto'}`}>
+                                            {prevIdea && (
+                                                <button
+                                                    onClick={() => {
+                                                        setSelectedIdea(prevIdea);
+                                                        const modalContent = document.querySelector('.custom-scrollbar');
+                                                        if (modalContent) modalContent.scrollTo({ top: 0, behavior: 'smooth' });
+                                                    }}
+                                                    className="flex items-center gap-4 p-5 rounded-2xl border border-slate-200 dark:border-slate-700 hover:border-primary/50 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-all text-left group"
+                                                >
+                                                    <div className="p-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-400 group-hover:text-primary transition-colors">
+                                                        <span className="material-icons">arrow_back</span>
+                                                    </div>
+                                                    <div>
+                                                        <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-1">Previous Guide</span>
+                                                        <p className="font-bold text-slate-700 dark:text-slate-300 text-sm line-clamp-1">{prevIdea.title}</p>
+                                                    </div>
+                                                </button>
+                                            )}
+                                            {nextIdea && (
+                                                <button
+                                                    onClick={() => {
+                                                        setSelectedIdea(nextIdea);
+                                                        const modalContent = document.querySelector('.custom-scrollbar');
+                                                        if (modalContent) modalContent.scrollTo({ top: 0, behavior: 'smooth' });
+                                                    }}
+                                                    className="flex items-center justify-between gap-4 p-5 rounded-2xl border border-slate-200 dark:border-slate-700 hover:border-primary/50 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-all text-right group"
+                                                >
+                                                    <div className="flex-1 min-w-0">
+                                                        <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-1">Next Transformation</span>
+                                                        <p className="font-bold text-slate-700 dark:text-slate-300 text-sm line-clamp-1">{nextIdea.title}</p>
+                                                    </div>
+                                                    <div className="p-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-400 group-hover:text-primary transition-colors">
+                                                        <span className="material-icons">arrow_forward</span>
+                                                    </div>
+                                                </button>
+                                            )}
+                                        </div>
                                     </div>
-                                    <p className="text-sm text-slate-500">Traditional Wisdom for Modern Healing</p>
+                                )}
+                                
+                                <div className="mt-12 pt-8 border-t border-slate-100 dark:border-slate-800 flex flex-col sm:flex-row justify-between items-center gap-6">
+                                    <div className="flex items-center gap-3">
+                                        <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+                                            <span className="material-icons text-sm">auto_awesome</span>
+                                        </div>
+                                        <p className="text-sm text-slate-500">Traditional Wisdom for Modern Healing</p>
+                                    </div>
+                                    <button
+                                        onClick={() => {
+                                            if (selectedIdea) {
+                                                const idStr = String(selectedIdea.id);
+                                                if (!readSubtopics.includes(idStr)) {
+                                                    toggleReadStatus(idStr);
+                                                }
+                                            }
+                                            setSelectedIdea(null);
+                                        }}
+                                        className="w-full sm:w-auto px-10 py-4 bg-primary text-white rounded-2xl font-bold hover:bg-primary/90 transition-all shadow-xl shadow-primary/20 flex items-center justify-center gap-2"
+                                    >
+                                        <span className="material-icons text-xl">check_circle</span>
+                                        Finished Reading
+                                    </button>
                                 </div>
-                                <button
-                                    onClick={() => setSelectedIdea(null)}
-                                    className="px-8 py-3 bg-primary text-white rounded-xl font-bold hover:bg-primary/90 transition-all shadow-lg shadow-primary/20"
-                                >
-                                    Finished Reading
-                                </button>
                             </div>
                         </div>
                     </div>
-                </div>
-            )}
+                );
+            })()}
         </div>
     );
 }
